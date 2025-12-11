@@ -1,7 +1,5 @@
 # Portfolio Backend API (Express + Supabase)
 
-![Backend Logo](./public/backend-logo.png)
-
 This is the **backend API** for the portfolio + CMS system.
 
 - Serves as the API layer for the **public portfolio frontend** (`/frontend`).
