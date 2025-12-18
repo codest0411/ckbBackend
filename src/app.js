@@ -49,7 +49,8 @@ app.use('/upload', mediaRoutes);
 app.use('/', contentRoutes);
 
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error('❌ Error:', err.message);
+  console.error('Stack:', err.stack);
   res
     .status(err.status || 500)
     .json({ success: false, message: err.message || 'Server error' });

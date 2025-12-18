@@ -9,6 +9,19 @@ dotenv.config({
   path: path.resolve(__dirname, '../../../.env'),
 });
 
+const normalizeCorsOrigin = (value) => {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return '';
+  if (trimmed === '*') return '*';
+
+  try {
+    const url = new URL(trimmed);
+    return `${url.protocol}//${url.hostname}${url.port ? `:${url.port}` : ''}`;
+  } catch {
+    return trimmed.replace(/\/+$/, '');
+  }
+};
+
 const requiredKeys = [
   'SUPABASE_URL',
   'SUPABASE_SERVICE_ROLE_KEY',
@@ -33,7 +46,7 @@ const config = {
   port: process.env.PORT || 5000,
   corsOrigins: (process.env.ALLOWED_ORIGINS || '')
     .split(',')
-    .map((origin) => origin.trim())
+    .map((origin) => normalizeCorsOrigin(origin))
     .filter(Boolean),
   supabaseUrl: process.env.SUPABASE_URL,
   supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
